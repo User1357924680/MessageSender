@@ -44,17 +44,17 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	private String sendRequest(Request request, AppChannel appChannel) {
-		if(appChannel instanceof Email) {
+		if (appChannel instanceof Email) {
 			Email email = (Email) appChannel;
 			return "Email: " + email.getAddress() + ", " + request.getMessage().toString() + "\n";
-		} else if (appChannel instanceof Facebook){
+		} else if (appChannel instanceof Facebook) {
 			Facebook facebook = (Facebook) appChannel;
 			return "Facebook: userId " + facebook.getUserId() + ", " + request.getMessage().toString() + "\n";
-		}else if(appChannel instanceof Sms) {
+		} else if (appChannel instanceof Sms) {
 			Sms sms = (Sms) appChannel;
 			return "Sms: phone " + sms.getPhone() + ", " + request.getMessage().toString() + "\n";
-		}else {
-			return "";
+		} else {
+			throw new IllegalArgumentException("No such channel " + appChannel);
 		}
 	}
 }
