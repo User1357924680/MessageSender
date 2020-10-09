@@ -19,12 +19,14 @@ public class RequestFactory {
 	public Request createRequest(Message message, AppChannel channel) {
 
 		if (channel instanceof Email) {
-			return new EmailRequest(message);
+			Message emailMessage = new Message(message.getId(), message.getUserName(), message.getDate(), message.getText(),
+					message.getAttachments());
+			return new EmailRequest(emailMessage);
 		} else if (channel instanceof Facebook) {
 			List<Attachment> attachmentsForFacebook = message.getAttachments();
 			attachmentsForFacebook = filterAttachments(attachmentsForFacebook);
-			Message facebookMessage = message;
-			facebookMessage.setAttachements(attachmentsForFacebook);
+			Message facebookMessage = new Message(message.getId(), message.getUserName(), message.getDate(), message.getText(),
+					attachmentsForFacebook);
 			return new FacebookRequest(facebookMessage);
 		} else if (channel instanceof Sms){
 			Message smsMessage = new Message(message.getId(), message.getUserName(), message.getDate(), message.getText());
